@@ -1,15 +1,16 @@
-package pl.effectivedev.example.featureflags.examples;
+package pl.effectivedev.example.featureflags.examples.context;
 
 import io.getunleash.UnleashContext;
-import io.getunleash.UnleashContextProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.effectivedev.example.featureflags.features.Features;
 
 import java.util.List;
-import java.util.stream.Stream;
 
+@Profile("contextFlag")
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class ContextFlagExample {
             new User("yoda", "jedi")
     );
 
+    @Scheduled(fixedRate = 2000)
     public void execute() {
         userDependentFeature();
         customAttributeDependentFeature();

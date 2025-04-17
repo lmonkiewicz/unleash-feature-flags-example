@@ -1,4 +1,4 @@
-package pl.effectivedev.example.featureflags;
+package pl.effectivedev.example.featureflags.features;
 
 import io.getunleash.DefaultUnleash;
 import io.getunleash.Unleash;
@@ -14,7 +14,7 @@ public class UnleashConfiguration {
         UnleashConfig config = UnleashConfig.builder()
                 .appName("feature-flags-example")
                 .instanceId("example-instance-1")
-                .unleashAPI("http://localhost:4242/")
+                .unleashAPI("http://localhost:4242/api")
                 .apiKey("default:development.unleash-insecure-api-token")
                 .synchronousFetchOnInitialisation(true)
                 .build();

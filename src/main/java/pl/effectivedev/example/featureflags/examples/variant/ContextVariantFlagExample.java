@@ -1,17 +1,21 @@
-package pl.effectivedev.example.featureflags.examples.context;
+package pl.effectivedev.example.featureflags.examples.variant;
 
 import io.getunleash.UnleashContext;
+import io.getunleash.variant.Payload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.effectivedev.example.featureflags.features.Features;
 
 import java.util.List;
 
+@Profile("variant")
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ContextFlagExample {
+public class ContextVariantFlagExample {
 
     private final Features features;
 
@@ -21,39 +25,22 @@ public class ContextFlagExample {
             new User("yoda", "jedi")
     );
 
+    @Scheduled(fixedRate = 2000)
     public void execute() {
-        userDependentFeature();
-        customAttributeDependentFeature();
-    }
-
-    private void userDependentFeature() {
         users.forEach(user -> {
-                    var context = UnleashContext.builder()
-                            .userId(user.userId)
-                            .build();
+            var context = UnleashContext.builder()
+                    .userId(user.userId)
+                    .build();
 
-                    if (features.isEnabled(Features.Feature.CONTEXT_USER_FLAG, context)) {
-                        log.info("Context flag ENABLED for user: {}", user);
-                    } else {
-                        log.info("Context flag DISABLED for user: {}", user);
-                    }
-                });
+            if (features.isEnabled(Features.Feature.VARIANT_FLAG, context)) {
+                var variant = features.getVariant(Features.Feature.VARIANT_FLAG, context);
+                var value = variant.getPayload().map(Payload::getValue).orElse(null);
 
-    }
-
-    private void customAttributeDependentFeature() {
-        users.forEach(user -> {
-                    var context = UnleashContext.builder()
-                            .userId(user.userId())
-                            .addProperty("role", String.valueOf(user.role()))
-                            .build();
-
-                    if (features.isEnabled(Features.Feature.CONTEXT_ATTRIBUTE_FLAG, context)) {
-                        log.info("Context Attribute flag ENABLED for user: {}", user);
-                    } else {
-                        log.info("Context Attribute flag DISABLED for user: {}", user);
-                    }
-                });
+                log.info("Context variant flag ENABLED for user: {} with VARIANT: {}", user, value);
+            } else {
+                log.info("Context variant flag DISABLED for user: {}", user);
+            }
+        });
     }
 
     record User(String userId, String role){}

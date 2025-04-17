@@ -1,4 +1,5 @@
 package pl.effectivedev.example.featureflags.examples.once;
 
-public class OnceEvaluatedFeature {
+public interface OnceEvaluatedFeature {
+    void execute();
 }
