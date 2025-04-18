@@ -1,5 +1,7 @@
 # Feature Flags: Spring Boot \+ Unleash
 
+Kod źródłowy do webinaru [Feature Flagi w Mikroserwisach](https://effectivedev.pl/webinar/feature-flags)
+
 ## Jak uruchomić
 
 ### Wymagania wstępne
