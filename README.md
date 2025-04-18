@@ -1,41 +1,49 @@
-# Feature Flags: Spring Boot + Unleash
+# Feature Flags: Spring Boot \+ Unleash
 
-## How to Run
+## Jak uruchomić
 
-### Prerequisites
-- Java 11 or higher
-- Docker and Docker Compose
-- Maven (or use the included Maven wrapper)
+### Wymagania wstępne
 
-### Starting the Unleash Server
-1. Start the Unleash server and its dependencies using Docker Compose:
-   ```
+* Java 11 lub wyższa
+* Docker i Docker Compose
+* Maven (lub użyj dołączonego wrapperu Maven)
+
+### Uruchamianie serwera Unleash
+
+1. Uruchom serwer Unleash i jego zależności używając Docker Compose:
+   
+2. ```bash
    docker-compose up -d
    ```
-2. The Unleash server will be available at http://localhost:4242
-   - Default admin credentials: admin/unleash4all
-3. Create the following feature flags in the Unleash UI:
-   - `SIMPLE_FLAG` - for simple ON/OFF flag example
-   - `CONTEXT_USER_FLAG` - for context-based flag example
-   - `CONTEXT_ATTRIBUTE_FLAG` - for context-based flag example (requires creating a "role" context field in Unleash UI)
-   - `ONCE_EVALUATED_FLAG` - for once-evaluated bean example
-   - `DYNAMIC_FLAG` - for dynamic bean switching example
-   - `VARIANT_FLAG` - for variant flag example (requires creating variant configuration in Unleash UI)
 
-### Running the Application
-Run the application with a selected profile to see different use cases:
+2. Serwer Unleash będzie dostępny pod adresem: http://localhost:4242
+   - Domyślne dane logowania administratora: `admin/unleash4all`
+3. Utwórz następujące flagi funkcyjne (feature flags) w interfejsie użytkownika Unleash:
+   - `SIMPLE_FLAG` - przykład prostej flagi ON/OFF
+   - `CONTEXT_USER_FLAG` - przykład flagi opartej na kontekście
+   - `CONTEXT_ATTRIBUTE_FLAG` - przykład flagi opartej na kontekście (wymaga utworzenia pola kontekstu "role" w interfejsie użytkownika Unleash)
+   - `ONCE_EVALUATED_FLAG` - przykład beana sprawdzającego flagę raz
+   - `DYNAMIC_FLAG` - przykład dynamicznego przełączania beanów
+   - `VARIANT_FLAG` - przykład flagi z wariantami (wymaga utworzenia konfiguracji wariantu w interfejsie użytkownika Unleash)
 
+### Uruchamianie aplikacji
+
+Uruchom aplikację z wybranym profilem, aby zobaczyć różne przypadki użycia:
+
+#### Użycie Mavena  
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=<profil>
 ```
-# Using Maven
-mvn spring-boot:run -Dspring-boot.run.profiles=<profile>
 
-# Using Maven wrapper
-./mvnw spring-boot:run -Dspring-boot.run.profiles=<profile>
+#### Użycie wrappera Mavena
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=<profil>
 ```
 
-### Available Profiles:
-- `simpleFlag` - simple ON/OFF flag
-- `contextFlag` - ON/OFF flag dependent on context values (ex. userId, or custom value)
-- `onceEvaluatedBean` - bean creation dependent on flag state - evaluated once at startup
-- `dynamicBean` - multiple beans, with dynamic switching between them, depending on the flag state
-- `variant` - example of flag with Variant value
+### Dostępne profile:
+
+- `simpleFlag` - prosta flaga ON/OFF
+- `contextFlag` - flaga ON/OFF zależna od wartości kontekstu (np. userId lub niestandardowa wartość)
+- `onceEvaluatedBean` - tworzenie beana zależne od stanu flagi \- ewaluowane raz przy starcie aplikacji
+- `dynamicBean` - wiele beanów, z dynamicznym przełączaniem między nimi w zależności od stanu flagi
+- `variant` - przykład flagi z wartością wariantu

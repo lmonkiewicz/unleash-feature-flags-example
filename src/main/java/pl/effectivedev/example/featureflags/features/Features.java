@@ -13,11 +13,11 @@ public class Features {
     private final Unleash unleash;
 
     public boolean isEnabled(Feature feature) {
-        return unleash.isEnabled(feature.name());
+        return unleash.isEnabled(feature.name(), false);
     }
 
     public boolean isEnabled(Feature feature, UnleashContext context) {
-        return unleash.isEnabled(feature.name(), context);
+        return unleash.isEnabled(feature.name(), context, false);
     }
 
     public Variant getVariant(Feature feature, UnleashContext context) {
